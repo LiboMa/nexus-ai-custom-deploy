@@ -124,31 +124,7 @@ curl -fsSL "https://nexus-ai-releases.s3.amazonaws.com/releases/v0.3.12/go.sh?X-
 
 部署成功后，终端会显示 Stack 创建完成的信息，包含访问地址和资源详情：
 
-```
-───────────────────────── Stack Created ─────────────────────────
-  Access URL    https://xxxxxxxxxx.cloudfront.net
-  EC2 IP        xx.xx.xx.xxx
-  SSH           ssh -i <key-name>.pem ec2-user@xx.xx.xx.xxx
-  Aurora        <env>-aurora.cluster-xxxxxxxxxx.<region>.rds.amazonaws.com
-  Valkey        <env>-valkey-xxxxxxxx.serverless.<region>.cache.amazonaws.com
-─────────────────────────────────────────────────────────────────
-
-  Environment <env-prefix> deployed successfully
-      Access: https://xxxxxxxxxx.cloudfront.net
-
-┌─────────────────────────────────────────────────────────────────┐
-│ Configuring Sandbox Runtime                                     │
-│ EC2 + Firecracker microVM                                       │
-└─────────────────────────────────────────────────────────────────┘
-
-Writing sandbox config to EC2...
-  ssm Patching config on EC2 i-xxxxxxxxxxxxxxxxx...
-  ssm Restarting services (api + avatar + sandbox controller)...
-  ✓ Config patched and services restarted (api + avatar + sandbox controller)
-
-✓ Sandbox configured
-  Node type: c8i.xlarge
-```
+![部署完成 - Stack Created](./images/deploy-complete-1.png)
 
 输出内容包括：
 - **Access URL**：CloudFront 访问地址
@@ -167,25 +143,7 @@ source /home/ec2-user/nexus-deploy/.venv-deploy/bin/activate
 python nexus-cli deploy status <env-prefix>
 ```
 
-输出示例：
-
-```
-              Environment Status: <env-prefix>
-┌─────────────────┬────────────────────────────────────────────────┐
-│ Property        │ Value                                          │
-├─────────────────┼────────────────────────────────────────────────┤
-│ Environment     │ <env-prefix>                                   │
-│ Stack           │ <env-prefix>-stack                             │
-│ Region          │ <region>                                       │
-│ Local Status    │ complete                                       │
-│ Live Status     │ CREATE_COMPLETE                                │
-│ Created         │ 2026-xx-xxTxx:xx:xx.xxxxxxZ                    │
-│ Completed       │ 2026-xx-xxTxx:xx:xx.xxxxxxZ                    │
-│ SSO             │ Disabled                                       │
-│ Access URL      │ https://xxxxxxxxxx.cloudfront.net              │
-│ EC2 IP          │ xx.xx.xx.xxx                                   │
-└─────────────────┴────────────────────────────────────────────────┘
-```
+![部署状态查看](./images/deploy-complete-2.png)
 
 状态信息包括：
 - **Environment**：环境名称
