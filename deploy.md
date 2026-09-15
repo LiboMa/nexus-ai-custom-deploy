@@ -120,7 +120,38 @@ curl -fsSL "https://nexus-ai-releases.s3.amazonaws.com/releases/v0.3.12/go.sh?X-
 
 **预计耗时**：25–35 分钟
 
-**部署完成后**：终端输出 CloudFront 访问地址及默认登录凭证 `admin/nexus`。
+#### 部署完成输出
+
+部署成功后，终端会显示 Stack 创建完成的信息，包含访问地址和资源详情：
+
+![部署完成 - Stack Created](./images/deploy-complete-1.png)
+
+输出内容包括：
+- **Access URL**：CloudFront 访问地址（如 `https://d2pnre3uj7pyzs.cloudfront.net`）
+- **EC2 IP**：主实例公网 IP
+- **SSH**：SSH 连接命令
+- **Aurora**：数据库集群端点
+- **Valkey**：缓存集群端点
+
+#### 查看部署状态
+
+可以使用以下命令查看环境状态：
+
+```bash
+cd /home/ec2-user/nexus-deploy/nexus-ai
+source /home/ec2-user/nexus-deploy/.venv-deploy/bin/activate
+python nexus-cli deploy status <env-prefix>
+```
+
+![部署状态查看](./images/deploy-complete-2.png)
+
+状态信息包括：
+- **Environment**：环境名称
+- **Stack**：CloudFormation Stack 名称
+- **Region**：部署区域
+- **Live Status**：`CREATE_COMPLETE` 表示部署成功
+- **Access URL**：应用访问地址
+- **EC2 IP**：实例 IP 地址
 
 ---
 
