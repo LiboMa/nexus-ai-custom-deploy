@@ -1,0 +1,41 @@
+{
+  "_snapshotAt": "2026-09-15T18:47:00+08:00",
+  "_account": "533267047935",
+  "role": {
+    "RoleName": "nexus-ec2-role",
+    "RoleId": "AROAXYKJRMX7Q6DRI2QN2",
+    "Arn": "arn:aws:iam::533267047935:role/nexus-ec2-role",
+    "Path": "/",
+    "Description": "nexus-ec2-role",
+    "MaxSessionDuration": 3600,
+    "CreateDate": "2026-07-22T02:35:06+00:00",
+    "RoleLastUsed": {
+      "LastUsedDate": "2026-09-15T10:37:56+00:00",
+      "Region": "us-east-1"
+    }
+  },
+  "instanceProfile": {
+    "InstanceProfileName": "nexus-ec2-role",
+    "Arn": "arn:aws:iam::533267047935:instance-profile/nexus-ec2-role"
+  },
+  "attachedManagedPolicies": [
+    {
+      "PolicyName": "AmazonSSMManagedInstanceCore",
+      "PolicyArn": "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+      "type": "aws-managed"
+    },
+    {
+      "PolicyName": "nexus-demo-role-ec2",
+      "PolicyArn": "arn:aws:iam::533267047935:policy/nexus-demo-role-ec2",
+      "type": "customer-managed",
+      "DefaultVersionId": "v1",
+      "file": "managed-nexus-demo-role-ec2-v1.json"
+    }
+  ],
+  "inlinePolicies": [
+    {
+      "PolicyName": "Policy",
+      "file": "inline-Policy.json"
+    }
+  ]
+}

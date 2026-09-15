@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowComputeServicesToAssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": [
+          "bedrock-agentcore.amazonaws.com",
+          "ecs-tasks.amazonaws.com",
+          "ec2.amazonaws.com",
+          "lambda.amazonaws.com"
+        ]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
