@@ -16,7 +16,7 @@ source .venv/bin/activate
     --bucket nexus-ai-releases --region us-east-1 \
     --env-prefix nexus-ai-basic --deploy-region us-east-1 \
     --instance-type c8i.2xlarge --volume-size 150 \
-    --key-name nexus-ai-demo --db-password 'NexusVerify2026!' \
+    --key-name nexus-ai-demo --db-password '<YourSecurePassword>' \
     --enable-sandbox --sandbox-default-runtime ec2 \
     --sandbox-instance-type c8i.xlarge --sandbox-pool-size 1 --sandbox-max-nodes 5 \
     --enable-avatar \
@@ -33,7 +33,7 @@ source .venv/bin/activate
     --bucket nexus-ai-releases-demo-1 --region us-east-1 \
     --env-prefix nexus-ai-basic --deploy-region us-east-1 \
     --instance-type c8i.2xlarge --volume-size 150 \
-    --key-name nexus-ai-demo --db-password 'NexusVerify2026!' \
+    --key-name nexus-ai-demo --db-password '<YourSecurePassword>' \
     --enable-sandbox --sandbox-default-runtime ec2 \
     --sandbox-instance-type c8i.xlarge --sandbox-pool-size 1 --sandbox-max-nodes 5 \
     --enable-avatar \
@@ -112,7 +112,7 @@ bash deploy.sh
 ```bash
 # 设置环境变量（使用 B.1 步骤创建的密钥对名称）
 export NEXUS_KEY_NAME='nexus-ai-deploy'
-export NEXUS_DB_PASSWORD='NexusVerify2026!'
+export NEXUS_DB_PASSWORD='<YourSecurePassword>'
 
 # 执行一键部署（URL 由维护者提供）
 curl -fsSL "https://nexus-ai-releases.s3.amazonaws.com/releases/v0.3.12/go.sh?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=xxxxxxx...." | bash
@@ -124,10 +124,34 @@ curl -fsSL "https://nexus-ai-releases.s3.amazonaws.com/releases/v0.3.12/go.sh?X-
 
 部署成功后，终端会显示 Stack 创建完成的信息，包含访问地址和资源详情：
 
-![部署完成 - Stack Created](./images/deploy-complete-1.png)
+```
+───────────────────────── Stack Created ─────────────────────────
+  Access URL    https://xxxxxxxxxx.cloudfront.net
+  EC2 IP        xx.xx.xx.xxx
+  SSH           ssh -i <key-name>.pem ec2-user@xx.xx.xx.xxx
+  Aurora        <env>-aurora.cluster-xxxxxxxxxx.<region>.rds.amazonaws.com
+  Valkey        <env>-valkey-xxxxxxxx.serverless.<region>.cache.amazonaws.com
+─────────────────────────────────────────────────────────────────
+
+  Environment <env-prefix> deployed successfully
+      Access: https://xxxxxxxxxx.cloudfront.net
+
+┌─────────────────────────────────────────────────────────────────┐
+│ Configuring Sandbox Runtime                                     │
+│ EC2 + Firecracker microVM                                       │
+└─────────────────────────────────────────────────────────────────┘
+
+Writing sandbox config to EC2...
+  ssm Patching config on EC2 i-xxxxxxxxxxxxxxxxx...
+  ssm Restarting services (api + avatar + sandbox controller)...
+  ✓ Config patched and services restarted (api + avatar + sandbox controller)
+
+✓ Sandbox configured
+  Node type: c8i.xlarge
+```
 
 输出内容包括：
-- **Access URL**：CloudFront 访问地址（如 `https://d2pnre3uj7pyzs.cloudfront.net`）
+- **Access URL**：CloudFront 访问地址
 - **EC2 IP**：主实例公网 IP
 - **SSH**：SSH 连接命令
 - **Aurora**：数据库集群端点
@@ -143,7 +167,25 @@ source /home/ec2-user/nexus-deploy/.venv-deploy/bin/activate
 python nexus-cli deploy status <env-prefix>
 ```
 
-![部署状态查看](./images/deploy-complete-2.png)
+输出示例：
+
+```
+              Environment Status: <env-prefix>
+┌─────────────────┬────────────────────────────────────────────────┐
+│ Property        │ Value                                          │
+├─────────────────┼────────────────────────────────────────────────┤
+│ Environment     │ <env-prefix>                                   │
+│ Stack           │ <env-prefix>-stack                             │
+│ Region          │ <region>                                       │
+│ Local Status    │ complete                                       │
+│ Live Status     │ CREATE_COMPLETE                                │
+│ Created         │ 2026-xx-xxTxx:xx:xx.xxxxxxZ                    │
+│ Completed       │ 2026-xx-xxTxx:xx:xx.xxxxxxZ                    │
+│ SSO             │ Disabled                                       │
+│ Access URL      │ https://xxxxxxxxxx.cloudfront.net              │
+│ EC2 IP          │ xx.xx.xx.xxx                                   │
+└─────────────────┴────────────────────────────────────────────────┘
+```
 
 状态信息包括：
 - **Environment**：环境名称
